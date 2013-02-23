@@ -13,34 +13,36 @@ SceneParser::SceneParser(const char* filename) {
   initialize();
 
   // open the file
-  assert(filename != NULL);
+  assert(filename != nullptr);
   const char *ext = &filename[strlen(filename)-4];
   assert(strcmp(ext,".txt") == 0);
   file = fopen(filename,"r");
-  assert (file != NULL);
+  assert (file != nullptr);
 
   // parse the scene
   parseFile();
 
   // close the file
   fclose(file);
-  file = NULL;
+  file = nullptr;
 }
 
 SceneParser::~SceneParser() {
-  if (group != NULL)
+  if (group != nullptr) {
     delete group;
-  if (camera != NULL)
+  }
+  if (camera != nullptr) {
     delete camera;
+  }
 }
 
 void SceneParser::initialize() {
   // initialize some reasonable default values
-  group = NULL;
-  camera = NULL;
+  group = nullptr;
+  camera = nullptr;
   background_color = Vec3f(0.5,0.5,0.5);
   current_object_color = Vec3f(1,1,1);
-  file = NULL;
+  file = nullptr;
 }
 
 // ====================================================================
@@ -212,7 +214,7 @@ Sphere* SceneParser::parseSphere() {
 
 int SceneParser::getToken(char token[MAX_PARSER_TOKEN_LENGTH]) {
   // for simplicity, tokens must be separated by whitespace
-  assert (file != NULL);
+  assert (file != nullptr);
   int success = fscanf(file,"%s ",token);
   if (success == EOF) {
     token[0] = '\0';

@@ -37,8 +37,8 @@ public:
   void Get(float &d0, float &d1) const {
     d0 = data[0];
     d1 = data[1]; }
-  float operator[](int i) const { 
-    assert (i >= 0 && i < 2); 
+  float operator[](int i) const {
+    assert (i >= 0 && i < 2);
     return data[i]; }
   float x() const { return data[0]; }
   float y() const { return data[1]; }
@@ -87,7 +87,7 @@ public:
     data[0] /= f;
     data[1] /= f;
     return *this; }
-  
+
   // OPERATIONS
   float Dot2(const Vec2f &V) const {
     return data[0] * V.data[0] + data[1] * V.data[1] ; }
@@ -120,7 +120,7 @@ private:
 
   // REPRESENTATION
   float		data[2];
-  
+
 };
 
 // ====================================================================
@@ -151,8 +151,8 @@ public:
     d0 = data[0];
     d1 = data[1];
     d2 = data[2]; }
-  float operator[](int i) const { 
-    assert (i >= 0 && i < 3); 
+  float operator[](int i) const {
+    assert (i >= 0 && i < 3);
     return data[i]; }
   float x() const { return data[0]; }
   float y() const { return data[1]; }
@@ -235,13 +235,13 @@ public:
     data[2] /= f;
     return *this; }
 
-  friend Vec3f operator+(const Vec3f &v1, const Vec3f &v2) { 
-    Vec3f v3; Add(v3,v1,v2); return v3; } 
+  friend Vec3f operator+(const Vec3f &v1, const Vec3f &v2) {
+    Vec3f v3; Add(v3,v1,v2); return v3; }
   friend Vec3f operator-(const Vec3f &v1, const Vec3f &v2) {
-    Vec3f v3; Sub(v3,v1,v2); return v3; } 
+    Vec3f v3; Sub(v3,v1,v2); return v3; }
   friend Vec3f operator*(const Vec3f &v1, float f) {
-    Vec3f v2; CopyScale(v2,v1,f); return v2; } 
-    
+    Vec3f v2; CopyScale(v2,v1,f); return v2; }
+
   // OPERATIONS
   float Dot3(const Vec3f &V) const {
     return data[0] * V.data[0] +
@@ -278,7 +278,7 @@ public:
     float y = v1.data[2]*v2.data[0] - v1.data[0]*v2.data[2];
     float z = v1.data[0]*v2.data[1] - v1.data[1]*v2.data[0];
     c.data[0] = x; c.data[1] = y; c.data[2] = z; }
-  
+
   // INPUT / OUTPUT
   void Write(FILE *F = stdout) {
     fprintf (F, "%f %f %f\n",data[0],data[1],data[2]); }
@@ -287,14 +287,14 @@ private:
 
   // REPRESENTATION
   float		data[3];
-  
+
 };
 
 // ====================================================================
 // ====================================================================
 
 class Vec4f {
-  
+
 public:
 
   // CONSTRUCTORS & DESTRUCTOR
@@ -327,8 +327,8 @@ public:
     d1 = data[1];
     d2 = data[2];
     d3 = data[3]; }
-  float operator[](int i) const { 
-    assert (i >= 0 && i < 4); 
+  float operator[](int i) const {
+    assert (i >= 0 && i < 4);
     return data[i]; }
   float x() const { return data[0]; }
   float y() const { return data[1]; }
@@ -436,7 +436,7 @@ public:
       data[1] * V.data[1] +
       data[2] * V.data[2] +
       data[3] * V.data[3]; }
-  
+
   // STATIC OPERATIONS
   static void Add(Vec4f &a, const Vec4f &b, const Vec4f &c ) {
     a.data[0] = b.data[0] + c.data[0];
@@ -477,14 +477,14 @@ public:
   // INPUT / OUTPUT
   void Write(FILE *F = stdout) {
     fprintf (F, "%f %f %f %f\n",data[0],data[1],data[2],data[3]); }
-  
+
 private:
 
   friend class Matrix;
 
   // REPRESENTATION
   float		data[4];
-  
+
 };
 
 inline ostream &operator<<(ostream &os, const Vec3f &v) {

@@ -7,7 +7,7 @@
 
 #include "raycast.h"
 
-class Sphere : public Object3D{
+class Sphere : public Object3D {
 
 
 public:
@@ -17,6 +17,9 @@ public:
 
   // Constructor with parameters specified.
   Sphere(Vec3f centre, float radius, Vec3f color);
+
+  // Destructor
+  ~Sphere();
 
   // A concrete implementation of pure virtual function in parent
   // class.

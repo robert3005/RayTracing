@@ -36,7 +36,8 @@ void Group::addObject(int index, Object3D *obj) {
 
 bool Group::intersect(const Ray &r, Hit &h)
 {
-
+  // TODO: Temporary compiler fix
+  return nullptr;
   // YOUR CODE HERE.
 
 }

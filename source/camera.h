@@ -13,6 +13,7 @@ public:
   // the range (0, 0) -> (1, 1) where these points represent the
   // corners of the image.  Implemented in subclasses.
   virtual Ray generateRay(Vec2f point) = 0;
+  virtual ~Camera() {};
 
 };
 

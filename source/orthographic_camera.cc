@@ -11,7 +11,11 @@ OrthographicCamera::OrthographicCamera(Vec3f centre, Vec3f direction, Vec3f up, 
 }
 
 
+OrthographicCamera::~OrthographicCamera() {}
+
 Ray OrthographicCamera::generateRay(Vec2f point)
 {
-
+  // TODO: Temporary compiler fix
+  Ray r;
+  return r;
 }

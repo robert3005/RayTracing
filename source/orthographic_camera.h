@@ -7,13 +7,16 @@
 
 #include "raycast.h"
 
-class OrthographicCamera : public Camera{
+class OrthographicCamera : public Camera {
 
 
 public:
 
   // Constructor.
   OrthographicCamera(Vec3f centre, Vec3f direction, Vec3f up, float size);
+
+  // Destructor
+  ~OrthographicCamera();
 
   // Concrete implementation of pure virtual function in the
   // parent class.

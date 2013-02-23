@@ -20,7 +20,7 @@ public:
   Object3D(Vec3f color){ this->_color = color; };
 
   // Destructor.
-  ~Object3D(){};
+  virtual ~Object3D() {};
 
   // Identify if the given ray intersects the object.  Return true if it does
   // and update the hit object to contain the smallest value of t (ray
