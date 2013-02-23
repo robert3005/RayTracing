@@ -4,6 +4,11 @@
 Group::Group(int n) {
 
   this->_object = new Object3D*[n];
+
+  for(int i = 0; i < n; ++i) {
+    this->_object[i] = NULL;
+  }
+
   this->_count  = n;
 }
 
@@ -15,7 +20,9 @@ Group::~Group() {
   }
 
   for (int i = 0; i < this->_count; i++) {
-    delete this->_object[i];
+    if(this->_object[i] != NULL) {
+      delete this->_object[i];
+    }
   }
 
   delete[] this->_object;
