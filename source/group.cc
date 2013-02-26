@@ -30,14 +30,14 @@ Group::~Group() {
 
 // Insert an object into the array.
 void Group::addObject(int index, Object3D *obj) {
-
-  // YOUR CODE HERE.
+  this->_object[index] = obj;
 }
 
-bool Group::intersect(const Ray &r, Hit &h)
-{
-  // TODO: Temporary compiler fix
-  return nullptr;
-  // YOUR CODE HERE.
+bool Group::intersect(const Ray &r, Hit &h) {
+  bool intersects = false;
+  for_each(this->_object, this->_object + this->_count, [&intersects, &h, &r] (Object3D * obj) -> void {
+    intersects = obj->intersect(r, h);
+  });
 
+  return intersects;
 }
