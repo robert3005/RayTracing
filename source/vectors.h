@@ -8,7 +8,7 @@ using namespace std;
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
+#include <cmath>
 #include <assert.h>
 
 class Matrix;
@@ -189,6 +189,10 @@ public:
     data[0] = -data[0];
     data[1] = -data[1];
     data[2] = -data[2]; }
+  void Abs() {
+    data[0] = abs(data[0]);
+    data[1] = abs(data[1]);
+    data[2] = abs(data[2]); }
 
   // OVERLOADED OPERATORS
   Vec3f& operator=(const Vec3f &V) {
