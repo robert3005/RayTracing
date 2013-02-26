@@ -8,7 +8,9 @@
 #include <iostream>
 
 #include <math.h>
+#include <algorithm>
 #include <assert.h>
+#include <limits>
 
 using namespace std;
 

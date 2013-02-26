@@ -3,9 +3,9 @@
 // Globals:
 
 // File names
-char *_inputName       = NULL;
-char *_outputNameRGB   = NULL;
-char *_outputNameDepth = NULL;
+char *_inputName       = nullptr;
+char *_outputNameRGB   = nullptr;
+char *_outputNameDepth = nullptr;
 
 // Image parameters.
 int _width      = 100;
@@ -66,11 +66,11 @@ int main(int argc, char** argv) {
   renderDepthImage(scene, depthImage);
 
   // Write results if necessary.
-  if (_outputNameRGB != NULL) {
+  if (_outputNameRGB != nullptr) {
     rgbImage.SavePPM(_outputNameRGB);
   }
 
-  if (_outputNameDepth != NULL){
+  if (_outputNameDepth != nullptr){
     depthImage.SavePPM(_outputNameDepth);
   }
 
@@ -78,14 +78,52 @@ int main(int argc, char** argv) {
 
 // Render a color image of objects in a scene.
 void renderRGBImage(SceneParser &scene, Image &image) {
+  Group * objGroup       = scene.getGroup();
+  Camera * sceneCamera   = scene.getCamera();
+  Vec3f backgroundColour = scene.getBackgroundColor();
+  float h = image.Height();
+  float w = image.Width();
+  Hit hit(numeric_limits<float>().max(), backgroundColour);
+  for(int y = 0; y < h; y++) {
+    for(int x = 0; x < w; x++) {
+      Vec2f v(x / w, (h - y - 1) / h);
+      Ray r = sceneCamera->generateRay(v);
+      objGroup->intersect(r, hit);
+      image.SetPixel(x, y, hit.getColor());
+      hit.set(numeric_limits<float>().max(), backgroundColour);
+    }
+  }
+}
 
-  // YOUR CODE HERE.
+Vec3f distanceToColour(float t) {
+  Vec3f colour;
+  if(t <= _depthMin) {
+    t = _depthMin;
+  } else if (t >= _depthMax) {
+    t = _depthMax;
+  }
 
+  float component = 1 - (t - _depthMin)/(_depthMax - _depthMin);
+  colour.Set(component, component, component);
+  return colour;
 }
 
 // Render an image showing the depth of objects from the camera.
 void renderDepthImage(SceneParser &scene, Image &image) {
-
-  // YOUR CODE HERE.
-
+  Group * objGroup       = scene.getGroup();
+  Camera * sceneCamera   = scene.getCamera();
+  Vec3f backgroundColour = scene.getBackgroundColor();
+  float h = image.Height();
+  float w = image.Width();
+  Hit hit(numeric_limits<float>().max(), backgroundColour);
+  for(int y = 0; y < h; y++) {
+    for(int x = 0; x < w; x++) {
+      Vec2f v(x / w, (h - y - 1) / h);
+      Ray r = sceneCamera->generateRay(v);
+      objGroup->intersect(r, hit);
+      Vec3f colour = distanceToColour(hit.getT());
+      image.SetPixel(x, y, colour);
+      hit.set(numeric_limits<float>().max(), backgroundColour);
+    }
+  }
 }
