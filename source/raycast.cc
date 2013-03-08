@@ -86,7 +86,7 @@ void renderRGBImage(SceneParser &scene, Image &image) {
   Hit hit(numeric_limits<float>().max(), backgroundColour);
   for(int y = 0; y < h; y++) {
     for(int x = 0; x < w; x++) {
-      Vec2f v(x / w, (h - y - 1) / h);
+      Vec2f v(x / w, y / h);
       Ray r = sceneCamera->generateRay(v);
       objGroup->intersect(r, hit);
       image.SetPixel(x, y, hit.getColor());
@@ -118,7 +118,7 @@ void renderDepthImage(SceneParser &scene, Image &image) {
   Hit hit(numeric_limits<float>().max(), backgroundColour);
   for(int y = 0; y < h; y++) {
     for(int x = 0; x < w; x++) {
-      Vec2f v(x / w, (h - y - 1) / h);
+      Vec2f v(x / w, y / h);
       Ray r = sceneCamera->generateRay(v);
       objGroup->intersect(r, hit);
       Vec3f colour = distanceToColour(hit.getT());

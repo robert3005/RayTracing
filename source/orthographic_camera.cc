@@ -3,20 +3,16 @@
 // Constructor with parameters.
 OrthographicCamera::OrthographicCamera(Vec3f centre, Vec3f direction, Vec3f up, float size) {
   // Normalise up and direction vector
-  direction.Normalize();
-  up.Normalize();
   this->direction = direction;
   this->centre = centre;
   this->size = size;
-  // Project up vector onto plane of which direction is a normal of
-  Vec3f projectedUp;
-  Vec3f::Cross3(projectedUp, up, direction);
-  Vec3f::Cross3(projectedUp, direction, projectedUp);
-  this->up = projectedUp;
   // Store horizontal vector for further use
-  Vec3f horizontal;
-  Vec3f::Cross3(horizontal, projectedUp, direction);
-  this->horizontal = horizontal;
+  Vec3f::Cross3(this->horizontal, up, direction);
+  // Project up vector onto plane of which direction is a normal of
+  Vec3f::Cross3(this->up, this->horizontal, direction);
+  this->up.Normalize();
+  this->direction.Normalize();
+  this->horizontal.Normalize();
 }
 
 OrthographicCamera::~OrthographicCamera() {}
