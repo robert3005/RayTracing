@@ -7,7 +7,7 @@ OrthographicCamera::OrthographicCamera(Vec3f centre, Vec3f direction, Vec3f up, 
   this->centre = centre;
   this->size = size;
   // Store horizontal vector for further use
-  Vec3f::Cross3(this->horizontal, up, direction);
+  Vec3f::Cross3(this->horizontal, direction, up);
   // Project up vector onto plane of which direction is a normal of
   Vec3f::Cross3(this->up, this->horizontal, direction);
   this->up.Normalize();
