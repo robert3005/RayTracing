@@ -12,13 +12,14 @@ Sphere::Sphere(Vec3f centre, float radius, Vec3f colour) {
 
 Sphere::~Sphere() {}
 
+// Find intersection between this object and ray
+// In general there can be up to two solutions and we want to reduce the one closer to the screen
+// i.e. has smaller distance
 bool Sphere::intersect(const Ray &r, Hit &h) {
   Vec3f d = r.getDirection();
   Vec3f orig = r.getOrigin();
   Vec3f deltaP = orig - this->centre;
-  Vec3f deltaPAbs(deltaP);
-  deltaPAbs.Abs();
-  float modifier = pow(d.Dot3(deltaP),2) - deltaPAbs.Dot3(deltaPAbs) + pow(radius,2);
+  float modifier = pow(d.Dot3(deltaP),2) - deltaP.Dot3(deltaP) + pow(radius,2);
   if(modifier < 0) {
     return false;
   }

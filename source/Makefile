@@ -28,5 +28,6 @@ test: all
 	./raycast -input ../scenes/scene3.txt -size 200 200 -output scene3.ppm -depth 8 12 depth3.ppm
 	./raycast -input ../scenes/scene4.txt -size 200 200 -output scene4.ppm -depth 13 16 depth4.ppm
 	./raycast -input ../scenes/scene5.txt -size 300 300 -output scene5.ppm -depth 1 7 depth5.ppm
+	./raycast -input ../scenes/scene6.txt -size 300 300 -output scene6.ppm -depth 13 16 depth6.ppm
 
 .PHONY: all clean

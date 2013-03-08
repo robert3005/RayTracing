@@ -10,6 +10,7 @@ OrthographicCamera::OrthographicCamera(Vec3f centre, Vec3f direction, Vec3f up, 
   Vec3f::Cross3(this->horizontal, direction, up);
   // Project up vector onto plane of which direction is a normal of
   Vec3f::Cross3(this->up, this->horizontal, direction);
+  // Normalise all vectors
   this->up.Normalize();
   this->direction.Normalize();
   this->horizontal.Normalize();
@@ -20,8 +21,8 @@ OrthographicCamera::~OrthographicCamera() {}
 Ray OrthographicCamera::generateRay(Vec2f point)
 {
   Vec3f rayOrigin(this->centre);
-  rayOrigin -= this->up * (this->size / 2) + this->horizontal * (this->size / 2);
-  rayOrigin += this->up * this->size * point[1] + this->horizontal * this->size * point[0];
+  // Start from zero and move from there according to the point
+  rayOrigin += this->up * this->size * (point[1] - 0.5) + this->horizontal * this->size * (point[0] - 0.5);
   Ray r(direction, rayOrigin);
   return r;
 }

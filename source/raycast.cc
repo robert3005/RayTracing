@@ -83,18 +83,20 @@ void renderRGBImage(SceneParser &scene, Image &image) {
   Vec3f backgroundColour = scene.getBackgroundColor();
   float h = image.Height();
   float w = image.Width();
-  Hit hit(numeric_limits<float>().max(), backgroundColour);
+  Hit hit(numeric_limits<float>::max(), backgroundColour);
   for(int y = 0; y < h; y++) {
     for(int x = 0; x < w; x++) {
-      Vec2f v(x / w, y / h);
-      Ray r = sceneCamera->generateRay(v);
+      // Normalise pixel coordinates in [0,1] range
+      Ray r = sceneCamera->generateRay(Vec2f (x / w, y / h));
       objGroup->intersect(r, hit);
       image.SetPixel(x, y, hit.getColor());
-      hit.set(numeric_limits<float>().max(), backgroundColour);
+      // Reset hit object
+      hit.set(numeric_limits<float>::max(), backgroundColour);
     }
   }
 }
 
+// Convert distance to a shade of gray where _depthMax is 0 and _depthMin is 1
 Vec3f distanceToColour(float t) {
   Vec3f colour;
   if(t <= _depthMin) {
@@ -103,7 +105,7 @@ Vec3f distanceToColour(float t) {
     t = _depthMax;
   }
 
-  float component = 1 - (t - _depthMin)/(_depthMax - _depthMin);
+  float component = (_depthMax - t)/(_depthMax - _depthMin);
   colour.Set(component, component, component);
   return colour;
 }
@@ -115,15 +117,17 @@ void renderDepthImage(SceneParser &scene, Image &image) {
   Vec3f backgroundColour = scene.getBackgroundColor();
   float h = image.Height();
   float w = image.Width();
-  Hit hit(numeric_limits<float>().max(), backgroundColour);
+  Hit hit(numeric_limits<float>::max(), backgroundColour);
   for(int y = 0; y < h; y++) {
     for(int x = 0; x < w; x++) {
-      Vec2f v(x / w, y / h);
-      Ray r = sceneCamera->generateRay(v);
+      // Normalise pixel coordinates in [0,1] range
+      Ray r = sceneCamera->generateRay(Vec2f (x / w, y / h));
       objGroup->intersect(r, hit);
+      // Get shade of grey depending on the distance
       Vec3f colour = distanceToColour(hit.getT());
       image.SetPixel(x, y, colour);
-      hit.set(numeric_limits<float>().max(), backgroundColour);
+      // Reset hit object
+      hit.set(numeric_limits<float>::max(), backgroundColour);
     }
   }
 }
